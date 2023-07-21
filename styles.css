@@ -1,0 +1,46 @@
+/* Estilos comuns (mesmos utilizados nos templates de login e registro) */
+
+.main-container {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .login-container, .register-container {
+    max-width: 400px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 20px;
+  }
+  
+  .login-container {
+    margin-right: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
