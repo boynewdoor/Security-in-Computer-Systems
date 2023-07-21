@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Validação do 2FA</title>
+  <link rel="stylesheet" href="register.css">
+</head>
+<body>
+  <div class="register-container">
+    <h1>Validação do 2FA</h1>
+    <form onsubmit="return validateOTP()">
+      <label for="otp">Código de Verificação:</label>
+      <input type="text" id="otp" name="otp" required>
+      
+      <button type="submit">Verificar</button>
+    </form>
+  </div>
+
+  <script>
+    function validateOTP() {
+      const enteredOTP = document.getElementById("otp").value;
+
+      // Recupera o código de verificação do LocalStorage
+      const storedOTP = localStorage.getItem("verificationCode");
+
+      if (enteredOTP === storedOTP) {
+        alert("Código de verificação válido. Registro concluído com sucesso!");
+        window.location.href = "login.html";
+        return false;
+      } else {
+        alert("Código de verificação inválido. Tente novamente.");
+        return false;
+      }
+    }
+  </script>
+</body>
+</html>
