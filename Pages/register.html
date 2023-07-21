@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registo - Criacao de conta</title>
+  <link rel="stylesheet" href="register.css">
+</head>
+<body>
+  <div class="register-container">
+    <h1>Crie uma conta</h1>
+    <form onsubmit="return registerUser()">
+      <label for="name">Nome:</label>
+      <input type="text" id="name" name="name" required autocomplete="off">
+      
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email" required autocomplete="off">
+      
+      <label for="password">Senha:</label>
+      <input type="password" id="password" name="password" required autocomplete="off">
+      
+      <label for="phone">Telefone:</label>
+      <input type="text" id="phone" name="phone" required autocomplete="off">
+      
+      <button type="submit">Registrar</button>
+    </form>
+  </div>
+
+  <script>
+    // Geração de Código de Verificação (OTP)
+    function generateOTP() {
+      const otpLength = 6; // Tamanho do código de verificação
+      const charset = "0123456789"; // Caracteres permitidos
+
+      let otp = "";
+      for (let i = 0; i < otpLength; i++) {
+        const randomIndex = Math.floor(Math.random() * charset.length);
+        otp += charset[randomIndex];
+      }
+
+      return otp;
+    }
+
+    // Função de registro do usuário com 2FA
+    async function registerUser() {
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const phone = document.getElementById("phone").value;
+
+      // Validação do e-mail
+      if (!validateEmail(email)) {
+        alert("Por favor, insira um endereço de e-mail válido.");
+        return false;
+      }
+
+      // Validação do número de telefone
+      if (!validatePhone(phone)) {
+        alert("Por favor, insira um número de telefone válido com 9 dígitos.");
+        return false;
+      }
+
+      // Gera o código de verificação
+      const otp = generateOTP();
+
+      // Simulação do envio do código de verificação por SMS
+      showVerificationCode(otp);
+
+      // Armazena o código de verificação no LocalStorage para uso posterior (simulação)
+      localStorage.setItem("verificationCode", otp);
+
+      // Armazena os dados de registo no LocalStorage para uso posterior
+      localStorage.setItem("registrationData", JSON.stringify({ name, password }));
+
+      // Impede o envio do formulário
+      return false;
+    }
+
+    // Simulação de envio de Código de Verificação por SMS
+    function showVerificationCode(otp) {
+      alert(`Código de verificação: ${otp}`);
+      redirectToValidationPage();
+    }
+
+    function redirectToValidationPage() {
+     const validationPageUrl = "validacao_2fa.html";
+     const newTab = window.open(validationPageUrl, "_blank");
+     if (!newTab) {
+      alert("Pop-up bloqueado pelo navegador. Por favor, permita pop-ups para continuar.");
+     }
+    }
+
+    function validateEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    function validatePhone(phone) {
+      const phoneRegex = /^\d{9}$/; // Formato de número de telefone de 9 dígitos (altere conforme necessário)
+      return phoneRegex.test(phone);
+    }
+  </script>
+</body>
+</html>
