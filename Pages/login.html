@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <div class="login-container">
+    <h1>Faça login</h1>
+    <form onsubmit="return loginUser()">
+      <label for="name">Nome de usuário:</label>
+      <input type="text" id="name" name="name" required autocomplete="off">
+      
+      <label for="password">Senha:</label>
+      <input type="password" id="password" name="password" required autocomplete="off">
+      
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
+
+  <script>
+    function loginUser() {
+      const name = document.getElementById("name").value;
+      const password = document.getElementById("password").value;
+
+      // Get the registration data from LocalStorage
+      const registrationData = JSON.parse(localStorage.getItem("registrationData"));
+
+      // Check if the entered credentials match the registration data
+      if (registrationData && registrationData.name === name && registrationData.password === password) {
+        // If they match, prompt for the verification code
+        const enteredVerificationCode = prompt("Insira o código de verificação:");
+
+        // Get the stored verification code from LocalStorage
+        const storedVerificationCode = localStorage.getItem("verificationCode");
+
+        // Check if the entered verification code matches the stored one
+        if (enteredVerificationCode === storedVerificationCode) {
+          // If they match, redirect to the account page
+          window.location.href = "account.html";
+        } else {
+          // If the verification code is incorrect, show an error message
+          alert("Código de verificação inválido. Acesso bloqueado.");
+        }
+      } else {
+        // If the username and password don't match, show an error message
+        alert("Credenciais inválidas. Por favor, verifique seu nome de usuário e senha.");
+      }
+
+      // Prevent form submission
+      return false;
+    }
+  </script>
+</body>
+</html>
